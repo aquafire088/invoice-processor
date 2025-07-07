@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Processing</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Invoice Processing System</h1>
+            <p class="subtitle">Upload, preview, and extract data from invoices</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="upload-section">
+                <h2 class="section-title">Upload Invoices</h2>
+                
+                <div class="dropzone" id="dropzone">
+                    <i>📁</i>
+                    <p>Drag & drop your invoice files here</p>
+                    <p>or</p>
+                    <button class="browse-btn" id="browseBtn">Browse Files</button>
+                    <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png" multiple style="display: none;">
+                </div>
+                
+                <div class="invoice-previews" id="invoicePreviewsContainer">
+                    <!-- Preview items will be added here dynamically -->
+                </div>
+                
+                <div class="upload-status" id="uploadStatus">
+                    <p>No files uploaded yet.</p>
+                </div>
+                
+                <div class="error-message" id="errorMessage">
+                    <p>Error: Please upload valid PDF, PNG, or JPG files.</p>
+                </div>
+                
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                
+                <div class="file-info-container" id="fileInfo">
+                    <div class="file-info-item">
+                        <p>Total Files</p>
+                        <p id="totalFiles">0</p>
+                    </div>
+                    <div class="file-info-item">
+                        <p>Total Size</p>
+                        <p id="totalSize">0 KB</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <h2 class="section-title">Field Selection</h2>
+                
+                <div class="field-selection">
+                    <div class="field-group">
+                        <h3>Basic Information</h3>
+                        <div class="field-options">
+                            <div class="field-option">
+                                <input type="checkbox" id="vendor_name" name="vendor_name">
+                                <label for="vendor_name">Vendor Name</label>
+                            </div>
+                            <div class="field-option">
+                                <input type="checkbox" id="invoice_number" name="invoice_number">
+                                <label for="invoice_number">Invoice Number</label>
+                            </div>
+                            <div class="field-option">
+                                <input type="checkbox" id="invoice_date" name="invoice_date">
+                                <label for="invoice_date">Invoice Date</label>
+                            </div>
+                            <div class="field-option">
+                                <input type="checkbox" id="due_date" name="due_date">
+                                <label for="due_date">Due Date</label>
+                            </div>
+                            <div class="field-option">
+                                <input type="checkbox" id="total_amount" name="total_amount">
+                                <label for="total_amount">Total Amount</label>
+                            </div>
+                            <div class="field-option">
+                                <input type="checkbox" id="tax_amount" name="tax_amount">
+                                <label for="tax_amount">Tax Amount</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="field-group">
+                        <div class="field-option">
+                            <input type="checkbox" id="lineItemsCheckbox" name="line_items">
+                            <label for="lineItemsCheckbox">Include Line Items</label>
+                        </div>
+                        
+                        <div class="line-item-options" id="lineItemOptions">
+                            <h3>Line Item Details</h3>
+                            <div class="field-options">
+                                <div class="field-option">
+                                    <input type="checkbox" id="item_description" name="item_description">
+                                    <label for="item_description">Description</label>
+                                </div>
+                                <div class="field-option">
+                                    <input type="checkbox" id="item_quantity" name="item_quantity">
+                                    <label for="item_quantity">Quantity</label>
+                                </div>
+                                <div class="field-option">
+                                    <input type="checkbox" id="item_unit_price" name="item_unit_price">
+                                    <label for="item_unit_price">Unit Price</label>
+                                </div>
+                                <div class="field-option">
+                                    <input type="checkbox" id="item_total" name="item_total">
+                                    <label for="item_total">Total</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn select-all-btn" id="selectAllBtn">Select Common Fields</button>
+                        <button class="btn extract-btn" id="extractBtn" disabled>Extract Fields</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-section" id="resultsSection">
+            <h2 class="section-title">Extraction Results</h2>
+            <div class="results-container" id="resultsContainer"></div>
+        </div>
+    </div>
+
+</body>
+</html>
